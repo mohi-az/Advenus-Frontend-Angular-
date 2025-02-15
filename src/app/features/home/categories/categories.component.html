@@ -1,0 +1,25 @@
+<div class="flex flex-col gap-5 w-full justify-around min-h-lvh">
+    <component-header 
+    [backgorundText]="'Travel'" 
+    [firstText]="'Find your best adventure'" [secondText]="'Advanture Ideas'"/>
+    <div class="grid grid-cols-2 py-10 xl:py-0 xl:grid-cols-4 gap-8 w-full justify-items-center">
+        @for (cat of Categories; track cat) {
+        <div class="flex flex-col items-center">
+          <div class="relative h-72 w-72 overflow-hidden rounded-full">
+            <img ngSrc="images/{{cat.image}}" fill class="object-cover" />
+            <div class="absolute inset-0 bg-orange-500 opacity-0 hover:opacity-60 hover:cursor-pointer transition-all duration-500
+            text-2xl text-white text-center ">
+                EXPLORE
+            </div>
+          </div>
+          <div class="flex flex-col items-center gap-4 text-center">
+            <span class="text-3xl uppercase font-Oswald">{{ cat.title }}</span>
+            <span class="px-4">{{ cat.description }}</span>
+            <button class="btn btn-neutral w-1/3 rounded-3xl">Browse</button>
+          </div>
+        </div>
+        }
+      </div>
+      
+      
+</div>
