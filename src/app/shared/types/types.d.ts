@@ -30,11 +30,14 @@ export interface City {
 
     ]
 }
-export interface Landmark {
-    name: string;
+export interface LandmarkView {
     id: number;
+    name: string;
     description: string | null;
-    image_url: string | null;
+    imageURL: string;
+    visitDuration: number;
+    cityName: string;
     cityId: number;
-    isDeleted: boolean;
+    countryName: string;
+    categories: Category[] | null;
 }

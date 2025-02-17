@@ -1,0 +1,119 @@
+<div class="flex flex-col gap-5">
+    <div class="p-4 border-2 border-gray-200 border-dashed rounded-lg dark:border-gray-700 ">
+        <div class="relative overflow-x-auto shadow-md sm:rounded-lg">
+            <div
+                class="flex items-center justify-between flex-column md:flex-row flex-wrap space-y-4 md:space-y-0 py-4 bg-white dark:bg-gray-900">
+
+                <div class="w-full flex flex-row gap-4 justify-end">
+                    <div>
+                        <button class="btn  btn-neutral btn-sm" (click)="openModal()">+Add</button>
+                    </div>
+                    <div class="relative">
+                        <div
+                            class="absolute inset-y-0 rtl:inset-r-0 start-0 flex items-center ps-3 pointer-events-none pl-5">
+                            <fa-icon [icon]="iconService.icons.Search" />
+                        </div>
+                        <input type="text" class="input input-success input-sm pl-10 mr-3" placeholder="Search" [formControl]="search">
+                    </div>
+
+                </div>
+                <table class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
+                    <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+                        <tr>
+
+                            <th scope="col" class="px-6 py-3">Name</th>
+                            <th scope="col" class="px-6 py-3">Location</th>
+                            <th scope="col" class="px-6 py-3">visit Duration</th>
+                            <!-- <th scope="col" class="px-6 py-3">Categories</th> -->
+                            <th scope="col" class="px-6 py-3">Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @for (landmark of filteredLandmarks; track $index) {
+                        <tr
+                            class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 border-gray-200 hover:bg-gray-50 dark:hover:bg-gray-600">
+                            <th scope="row"
+                                class="flex items-center px-6 py-4 text-gray-900 whitespace-nowrap dark:text-white">
+                                {{landmark.name}}
+                            </th>
+                            <td class="px-6 py-4">
+                                {{landmark.countryName}} / {{landmark.cityName}}
+                            </td>
+                            <td class="px-6 py-4">
+                                @if(landmark.visitDuration){
+                                {{landmark.visitDuration}}
+                                }
+                                @else {-}
+                            </td>
+                            <!-- <td class="px-6 py-4 flex flex-grow flex-wrap gap-1">
+                                @for(cat of landmark.categories; track $index){
+                                <div class="badge badge-secondary">{{cat.name}}</div>
+                                }
+                            </td> -->
+                            <td class="px-6 py-4">
+                                <button (click)="openModal(landmark)" class=" btn btn-success btn-sm ">View
+                                    Details</button>
+                            </td>
+                        </tr>
+                        }
+                    </tbody>
+                </table>
+
+            </div>
+            <component-modal>
+                <form [formGroup]="landmarkForm" (ngSubmit)="submitForm()"
+                    class="space-y-4 p-6 bg-white shadow-lg rounded-md flex flex-col gap-0 ">
+                    <input type="text" id="name" formControlName="name" class="input input-bordered w-full  input-md"
+                        placeholder="Name" />
+                    <textarea id="description" formControlName="description"
+                        class="textarea textarea-bordered w-full textarea-md" rows="2"
+                        placeholder="Description"></textarea>
+                    <input type="text" id="imageURL" formControlName="imageURL"
+                        class="input input-bordered w-full  input-md" placeholder="Image URL" />
+                    <input type="number" id="visitDuration" formControlName="visitDuration"
+                        class="input input-bordered w-full input-md" placeholder="Visit Duration (in minutes)" />
+                    <select formControlName="country" class="select select-bordered w-full select-md"
+                        (change)="GetCity()">
+                        @for (country of statisDataService.getCountries(); track $index) {
+                        <option [value]="country.name">{{ country.name }}</option>
+                        }
+                    </select>
+                    <select formControlName="city" class="select select-bordered w-full select-md">
+                        @for (city of filteredCity; track $index) {
+                        <option [value]="city.id">{{ city.name }}</option>
+                        }
+
+                    </select>
+                    <div class="flex flex-row gap-5 justify-end">
+                        @if(selectedLandmark) {
+                        <button [disabled]="landmarkForm.invalid || isBusy"
+                            class="btn btn-secondary  btn-md btn-wide" (click)="deleteLandmark()">Delete</button>
+                        }
+                        <button type="submit" [disabled]="landmarkForm.invalid || isBusy"
+                            class="btn btn-neutral btn-wide  btn-md">Submit</button>
+                    </div>
+                </form>
+                @if (landmarkForm.invalid && (landmarkForm.touched)) {
+                <div class="error-container">
+                    <ul>
+                        @if (landmarkForm.get('name')?.errors?.['required']) {
+                        <li>Name is required.</li>
+                        }
+                        @if (landmarkForm.get('imageURL')?.errors?.['required']) {
+                        <li>Image URL is required.</li>
+                        }
+                        @if (landmarkForm.get('visitDuration')?.errors?.['min']) {
+                        <li>Visit Duration must be at least 1.</li>
+                        }
+                        @if (landmarkForm.get('visitDuration')?.errors?.['max']) {
+                        <li>Visit Duration cannot exceed 500.</li>
+                        }
+                        @if (landmarkForm.get('city')?.errors?.['required']) {
+                        <li>City is required.</li>
+                        }
+                    </ul>
+                </div>
+                }
+            </component-modal>
+        </div>
+    </div>

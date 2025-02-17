@@ -3,7 +3,7 @@ import { ActivatedRoute } from '@angular/router';
 import { AppState } from "../../states/app.state";
 import { Store } from "@ngrx/store";
 import { selectAllCities, selectLoading } from "../../states/city/city.selectors";
-import { City, Landmark } from "../../shared/types/types";
+import { City, LandmarkView } from "../../shared/types/types";
 import { map, mergeMap, switchMap } from "rxjs";
 import * as CityAction from '../../states/city/city.actions';
 import * as LandmarkActions from '../../states/landmark/landmark.actions';
@@ -23,7 +23,7 @@ export class CityComponent {
     private store = inject(Store<AppState>);
     loading = signal<boolean>(false);
     city :City | null=null;
-    landmarks :Landmark[] | null=null;
+    landmarks :LandmarkView[] | null=null;
     cityName: string | null = null;
     ngOnInit() {
         this.route.paramMap.pipe(

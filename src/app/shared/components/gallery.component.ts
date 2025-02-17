@@ -1,7 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
-import { Landmark } from '../types/types';
+import { LandmarkView } from '../types/types';
 
 @Component({
     selector: 'component-gallery',
@@ -12,7 +12,7 @@ import { Landmark } from '../types/types';
       <div *ngFor="let landmark of landmarks; trackBy: trackById" 
         class="relative w-full mb-4 break-inside-avoid overflow-hidden rounded-lg cursor-pointer transition-transform duration-300 hover:scale-105"
         (click)="goToDetail(landmark.id)">
-          <img [src]="'upload/images/'+landmark.image_url" [alt]="landmark.name" class="w-full h-auto rounded-lg">
+          <img [src]="'upload/images/'+landmark.imageURL" [alt]="landmark.name" class="w-full h-auto rounded-lg">
         <div 
           class="absolute inset-0 flex flex-col justify-center items-center bg-black bg-opacity-60 text-white opacity-0 hover:opacity-100 transition-opacity duration-300">
           <h3 class="text-lg font-bold">{{ landmark.name }}</h3>
@@ -23,14 +23,14 @@ import { Landmark } from '../types/types';
   `,
 })
 export class GalleryComponent implements OnInit {
-    @Input() landmarks: Landmark[] = [];
+    @Input() landmarks: LandmarkView[] = [];
     constructor(private router: Router) { }
     ngOnInit() {
     }
     goToDetail(landmarkId: number) {
         this.router.navigate(['/landmark', landmarkId]);
     }
-    trackById(index: number, item: Landmark) {
+    trackById(index: number, item: LandmarkView) {
         return item.id;
     }
 }

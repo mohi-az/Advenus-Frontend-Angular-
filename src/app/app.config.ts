@@ -8,7 +8,9 @@ import { provideStoreDevtools } from '@ngrx/store-devtools';
 import { LandmarkEffects } from './states/landmark/landmark.effects';
 import { routes } from './app.routes';
 import { provideRouter, withInMemoryScrolling } from '@angular/router';
+import { provideAnimations } from '@angular/platform-browser/animations';
 
+import { provideToastr } from 'ngx-toastr';
 export const appConfig: ApplicationConfig = {
   providers: [
     provideHttpClient(),
@@ -17,6 +19,8 @@ export const appConfig: ApplicationConfig = {
     provideStoreDevtools({ maxAge: 25 }),
     provideRouter(routes, withInMemoryScrolling({
       scrollPositionRestoration: "top",
-    }))
+    })),
+    provideAnimations(), // required animations providers
+    provideToastr({progressBar:true,preventDuplicates:true}), // Toastr providers
   ],
 };
