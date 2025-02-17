@@ -1,0 +1,139 @@
+<div class="flex flex-col gap-5">
+    <div class="p-4 border-2 border-gray-200 border-dashed rounded-lg dark:border-gray-700 ">
+        <div class="relative overflow-x-auto shadow-md sm:rounded-lg">
+            <div
+                class="flex items-center justify-between flex-column md:flex-row flex-wrap space-y-4 md:space-y-0 py-4 bg-white dark:bg-gray-900">
+
+                <div class="w-full flex flex-row gap-4 justify-end">
+                    <div>
+                        <button class="btn  btn-neutral btn-sm" (click)="openModal()">+Add</button>
+                    </div>
+                    <div class="relative">
+                        <div
+                            class="absolute inset-y-0 rtl:inset-r-0 start-0 flex items-center ps-3 pointer-events-none pl-5">
+                            <fa-icon [icon]="iconService.icons.Search" />
+                        </div>
+                        <input type="text" class="input input-success input-sm pl-10 mr-3" placeholder="Search"
+                            [formControl]="search">
+                    </div>
+
+                </div>
+                <table class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
+                    <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+                        <tr>
+
+                            <th scope="col" class="px-6 py-3">City Name</th>
+                            <th scope="col" class="px-6 py-3">Country Name</th>
+                            <th scope="col" class="px-6 py-3">Continent</th>
+                            <th scope="col" class="px-6 py-3">Population</th>
+                            <th scope="col" class="px-6 py-3">Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @for (city of filteredcities; track $index) {
+                        <tr
+                            class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 border-gray-200 hover:bg-gray-50 dark:hover:bg-gray-600">
+                            <th scope="row"
+                                class="flex items-center px-6 py-4 text-gray-900 whitespace-nowrap dark:text-white">
+                                {{city.name}}
+                            </th>
+                            <td class="px-6 py-4">{{city.country}}</td>
+                            <td class="px-6 py-4">{{city.name_native?city.name_native:'-'}}</td>
+                            <td class="px-6 py-4">{{city.continent?city.continent:'-'}}</td>
+                            <td class="px-6 py-4">{{city.population?city.population:'-'}}</td>
+                            <td class="px-6 py-4">
+                                <button (click)="openModal(city)" class=" btn btn-success btn-sm ">View
+                                    Details</button>
+                            </td>
+                        </tr>
+                        }
+                    </tbody>
+                </table>
+
+            </div>
+            <component-modal>
+                <form [formGroup]="cityFormGroup" (ngSubmit)="submitForm()"
+                    class="space-y-4 p-6 bg-white shadow-lg rounded-md flex flex-col gap-0 ">
+                    <select formControlName="country" class="select select-bordered w-full select-md" (change)="GetCity()">
+                        @for (country of statisDataService.getCountries(); track $index) {
+                        <option [value]="country.name">{{ country.name }}</option>
+                        }
+                    </select>
+                    <select formControlName="city" class="select select-bordered w-full select-md">
+                        @for (city of filteredCity; track $index) {
+                        <option [value]="city.id">{{ city.name }}</option>
+                        }
+                    </select>
+                    <textarea id="description" formControlName="description"
+                        class="textarea textarea-bordered w-full textarea-md" rows="2"
+                        placeholder="Description"></textarea>
+                    <input type="text" id="name_native" formControlName="name_native"
+                        class="input input-bordered w-full  input-md" placeholder="Native Name" />
+                    <input type="text" id="continent" formControlName="continent"
+                        class="input input-bordered w-full  input-md" placeholder="Continent" />
+                    <input type="number" id="latitude" formControlName="latitude"
+                        class="input input-bordered w-full input-md" placeholder="Latitude" />
+                    <input type="number" id="longitude" formControlName="longitude"
+                        class="input input-bordered w-full input-md" placeholder="Longitude" />
+                    <input type="number" id="population" formControlName="population"
+                        class="input input-bordered w-full input-md" placeholder="Population" />
+                    <input type="number" id="founded" formControlName="founded"
+                        class="input input-bordered w-full input-md" placeholder="Founded year" />
+                    <div class="flex flex-row gap-5 justify-end">
+                        @if(selectedCity) {
+                        <button [disabled]="cityFormGroup.invalid || isFormBusy" class="btn btn-secondary  btn-md btn-wide"
+                            (click)="deleteCity()">Delete</button>
+                        }
+                        <button type="submit" [disabled]="cityFormGroup.invalid || isFormBusy"
+                            class="btn btn-neutral btn-wide  btn-md">Submit</button>
+                    </div>
+                </form>
+                @if (cityFormGroup.invalid && (cityFormGroup.touched || cityFormGroup.untouched)) {
+                <div class="error-container">
+                    <ul>
+                        @if (cityFormGroup.get('city')?.errors?.['required']) {
+                        <li>City Name is required.</li>
+                        }
+                        @if (cityFormGroup.get('description')?.errors?.['required']) {
+                        <li>Description is required.</li>
+                        }
+                        @if (cityFormGroup.get('country')?.errors?.['required']) {
+                        <li>Country is required.</li>
+                        }
+                        @if (cityFormGroup.get('latitude')?.errors?.['required']) {
+                        <li>Latitude is required.</li>
+                        }
+                        @if (cityFormGroup.get('latitude')?.errors?.['min']) {
+                        <li>Latitude must be at least -90.</li>
+                        }
+                        @if (cityFormGroup.get('latitude')?.errors?.['max']) {
+                        <li>Latitude cannot exceed 90.</li>
+                        }
+                        @if (cityFormGroup.get('latitude')?.errors?.['pattern']) {
+                        <li>Invalid format for Latitude. Example: 45.6789</li>
+                        }
+
+                        @if (cityFormGroup.get('longitude')?.errors?.['required']) {
+                        <li>Longitude is required.</li>
+                        }
+                        @if (cityFormGroup.get('longitude')?.errors?.['min']) {
+                        <li>Longitude must be at least -180.</li>
+                        }
+                        @if (cityFormGroup.get('longitude')?.errors?.['max']) {
+                        <li>Longitude cannot exceed 180.</li>
+                        }
+                        @if (cityFormGroup.get('longitude')?.errors?.['pattern']) {
+                        <li>Invalid format for Longitude. Example: -123.4567</li>
+                        }
+                        @if (cityFormGroup.get('founded')?.errors?.['min']) {
+                        <li>Founded year must be at least 100.</li>
+                        }
+                        @if (cityFormGroup.get('founded')?.errors?.['max']) {
+                        <li>Founded year cannot exceed 2000.</li>
+                        }
+                    </ul>
+                </div>
+                }
+            </component-modal>
+        </div>
+    </div>

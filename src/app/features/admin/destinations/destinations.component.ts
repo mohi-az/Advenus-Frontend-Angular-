@@ -10,7 +10,6 @@ import { selectLandmarks } from '../../../states/landmark/landmark.selectors'
 import { LandmarkView } from "../../../shared/types/types";
 import * as LandmarkActions from '../../../states/landmark/landmark.actions'
 import { mergeMap, take, tap } from "rxjs";
-import { CommonModule } from "@angular/common";
 import { StaticDataService } from "../../../shared/services/staticData.service";
 import { ToastrService } from 'ngx-toastr';
 
@@ -18,7 +17,7 @@ import { ToastrService } from 'ngx-toastr';
 @Component({
   selector: 'admin-destinations',
   templateUrl: './destinations.component.html',
-  imports: [ReactiveFormsModule, FontAwesomeModule, ComponentModal, CommonModule],
+  imports: [ReactiveFormsModule, FontAwesomeModule, ComponentModal],
 
 })
 export class Admin_DestinationsComponent {
@@ -33,7 +32,7 @@ export class Admin_DestinationsComponent {
   filteredLandmarks: LandmarkView[] = []
   search = new FormControl('');
 
-  isBusy = false;
+  isFormBusy = false;
   selectedLandmark: LandmarkView | null = null
   filteredCity: { id: number; name: string; countryId: number; }[] = [];
   ngOnInit() {
@@ -57,7 +56,6 @@ export class Admin_DestinationsComponent {
         this.filteredLandmarks = this.landmarks;
     }
     )
-
   }
   landmarkForm = this.formBuilder.group({
     name: ['', Validators.required],
@@ -92,7 +90,7 @@ export class Admin_DestinationsComponent {
   }
   submitForm() {
     if (this.landmarkForm.valid) {
-      this.isBusy = true;
+      this.isFormBusy = true;
       // get city informations to create a city if it's a new
       let cityName =  this.statisDataService.getCities().find(c => c.id === Number(this.landmarkForm.value.city))?.name ??''
       let countryName = this.statisDataService.getCountries().find(c => c.name === this.landmarkForm.value.country)?.name ??''
@@ -139,7 +137,7 @@ export class Admin_DestinationsComponent {
           }
           else
             this.toastrService.error('Something went wrong, Please try again!');
-          this.isBusy = false
+          this.isFormBusy = false
         })
       ).subscribe(result => this.store.dispatch(LandmarkActions.loadLandmarks())
       );
@@ -150,7 +148,7 @@ export class Admin_DestinationsComponent {
   }
   deleteLandmark() {
     if (this.selectedLandmark) {
-      this.isBusy = true;
+      this.isFormBusy = true;
       this.store.dispatch(LandmarkActions.deleteLandmarks({ LandmarksId: this.selectedLandmark.id }))
       this.actions$.pipe(
         ofType(LandmarkActions.deleteLandmarksSuccess),
@@ -164,7 +162,7 @@ export class Admin_DestinationsComponent {
           else {
             this.toastrService.error('Something went wrong, Please try again!');
           }
-          this.isBusy = false;
+          this.isFormBusy = false;
         })
       ).subscribe();
     }

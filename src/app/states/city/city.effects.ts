@@ -18,14 +18,34 @@ export class CityEffects {
       mergeMap(() =>
         this.http.get<City[]>(this.apiURL).pipe(
           map(cities => CityActions.loadCitiesSuccess({ cities })),
-          catchError(error => {
-            return of(CityActions.loadCitiesFailure({ error }));
-          })
+          catchError(error => of(CityActions.loadCitiesFailure({ error })))
         )
       )
     )
 
   );
+  addCity$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(CityActions.addCity),
+      mergeMap((action) =>
+        this.http.post(this.apiURL, action.cities).pipe(
+          map(result => CityActions.addCitySuccess()),
+          catchError(error => of(CityActions.addCityFailure({ error })))
+        )
+
+      )
+    ));
+  updateCity$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(CityActions.updateCity),
+      mergeMap((action) =>
+        this.http.patch(this.apiURL + action.cityId, action.cities).pipe(
+          map(result => CityActions.updateCitySuccess()),
+          catchError(error => of(CityActions.updateCityFailure(error)))
+        )
+      )
+    )
+  )
   deleteCity$ = createEffect(() =>
     this.actions$.pipe(
       ofType(CityActions.deleteCity),

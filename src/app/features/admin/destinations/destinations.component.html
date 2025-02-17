@@ -86,10 +86,10 @@
                     </select>
                     <div class="flex flex-row gap-5 justify-end">
                         @if(selectedLandmark) {
-                        <button [disabled]="landmarkForm.invalid || isBusy"
+                        <button [disabled]="landmarkForm.invalid || isFormBusy"
                             class="btn btn-secondary  btn-md btn-wide" (click)="deleteLandmark()">Delete</button>
                         }
-                        <button type="submit" [disabled]="landmarkForm.invalid || isBusy"
+                        <button type="submit" [disabled]="landmarkForm.invalid || isFormBusy"
                             class="btn btn-neutral btn-wide  btn-md">Submit</button>
                     </div>
                 </form>

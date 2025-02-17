@@ -6,6 +6,7 @@ import { Admin_Layout } from './features/admin/adminLayout/adminLayout.component
 import { Admin_DashboardComponent } from './features/admin/dashboard/dashboard.component';
 import { LayoutComponent } from './layout/layout.component';
 import { Admin_DestinationsComponent } from './features/admin/destinations/destinations.component';
+import { Admin_CitiesComponent } from './features/admin/cities/cities.component';
 
 export const routes: Routes = [
     {
@@ -24,6 +25,8 @@ export const routes: Routes = [
         component: Admin_Layout,
         children: [
             { path: 'dashboard', component: Admin_DashboardComponent },
-            { path: 'destinations', component: Admin_DestinationsComponent }
+            { path: 'destinations', component: Admin_DestinationsComponent },
+            { path: 'cities', component: Admin_CitiesComponent },
+
         ]
     }];
