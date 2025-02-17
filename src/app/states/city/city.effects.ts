@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable ,inject} from '@angular/core';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
 import * as CityActions from './city.actions';
 import { catchError, map, mergeMap } from 'rxjs/operators';
@@ -9,9 +9,8 @@ import { City } from '../../shared/types/types';
 @Injectable()
 export class CityEffects {
   private apiURL = 'http://localhost:3000/api/city/';
-  constructor(private actions$: Actions, private http: HttpClient) {
-    console.log('CityEffects Initialized');
-  }
+  private actions$ = inject(Actions);
+  private http = inject(HttpClient);
   loadCities$ = createEffect(() =>
     this.actions$.pipe(
       ofType(CityActions.loadCities),

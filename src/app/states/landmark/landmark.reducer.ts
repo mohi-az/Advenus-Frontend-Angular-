@@ -15,7 +15,7 @@ const initialValues: LandmarkState = {
 export const landmarkReducer = createReducer(
     initialValues,
     on(LandmarkActions.loadLandmarks, (state) => ({ ...state, loading: true })),
-    on(LandmarkActions.loadLandmarksSuccess, (state, { Landmarks }) => ({ ...state, landmarks:Landmarks })),
+    on(LandmarkActions.loadLandmarksSuccess, (state, { Landmarks }) => ({ ...state, landmarks:Landmarks,loading:false })),
     on(LandmarkActions.loadLandmarksFailure, (state, { error }) => ({ ...state, error: error, loading: false })),
 
     on(LandmarkActions.addLandmarks, (state) => ({ ...state, loading: true })),

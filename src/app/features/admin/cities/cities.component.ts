@@ -10,7 +10,7 @@ import { ComponentModal } from "../../../shared/components/modal/modal.component
 import { City, CityFormValue } from "../../../shared/types/types";
 import * as CityActions from '../../../states/city/city.actions'
 import { map, mergeMap, take, tap } from "rxjs";
-import { selectAllCities } from "../../../states/city/city.selectors";
+import { selectAllCities, selectLoading } from "../../../states/city/city.selectors";
 import { FontAwesomeModule } from "@fortawesome/angular-fontawesome";
 
 @Component({
@@ -31,7 +31,7 @@ export class Admin_CitiesComponent {
     cities: City[] = []
     filteredcities: City[] = []
     search = new FormControl('');
-
+    loading = false;
     isFormBusy = false;
     selectedCity: City | null = null
     filteredCity: { id: number; name: string; countryId: number; }[] = [];
@@ -49,6 +49,9 @@ export class Admin_CitiesComponent {
     ngOnInit() {
         this.loadCities();
         this.setupSearch();
+        this.store.select(selectLoading).subscribe(isLoading => {
+            this.loading = isLoading;
+        });
     }
     private loadCities(): void {
         this.store.select(selectAllCities).pipe(
@@ -70,6 +73,7 @@ export class Admin_CitiesComponent {
         });
     }
     openModal(city?: City): void {
+        this.isFormBusy = false;
         if (city) {
             this.cityFormGroup.controls.city.disable();
             this.cityFormGroup.controls.country.disable();

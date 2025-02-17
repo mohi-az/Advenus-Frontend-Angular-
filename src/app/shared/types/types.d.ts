@@ -53,3 +53,12 @@ interface CityFormValue {
     population: string;
     founded: string;
 }
+
+interface LandmarkFormValue{
+    name: string | null;
+    description: string | null;
+    imageURL: string | null;
+    visitDuration: string | null;
+    city: string | null;
+    country: string | null;
+}

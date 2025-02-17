@@ -1,5 +1,12 @@
 <div class="flex flex-col gap-5">
+
     <div class="p-4 border-2 border-gray-200 border-dashed rounded-lg dark:border-gray-700 ">
+        @if(loading){
+        <div class="flex justify-center h-[70vh]">
+            <div class="loading loading-infinity text-success text-6xl loading-lg"></div>
+        </div>
+        }
+        @else {
         <div class="relative overflow-x-auto shadow-md sm:rounded-lg">
             <div
                 class="flex items-center justify-between flex-column md:flex-row flex-wrap space-y-4 md:space-y-0 py-4 bg-white dark:bg-gray-900">
@@ -13,7 +20,8 @@
                             class="absolute inset-y-0 rtl:inset-r-0 start-0 flex items-center ps-3 pointer-events-none pl-5">
                             <fa-icon [icon]="iconService.icons.Search" />
                         </div>
-                        <input type="text" class="input input-success input-sm pl-10 mr-3" placeholder="Search" [formControl]="search">
+                        <input type="text" class="input input-success input-sm pl-10 mr-3" placeholder="Search"
+                            [formControl]="search">
                     </div>
 
                 </div>
@@ -116,4 +124,7 @@
                 }
             </component-modal>
         </div>
+        }
     </div>
+
+</div>

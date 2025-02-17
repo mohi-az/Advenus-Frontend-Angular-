@@ -3,11 +3,12 @@ import { createEffect, ofType, Actions } from "@ngrx/effects";
 import * as LandmarkActions from './landmark.actions'
 import { catchError, map, mergeMap, of } from "rxjs";
 import { LandmarkView } from "../../shared/types/types";
-import { Injectable } from "@angular/core";
+import { Injectable,inject } from "@angular/core";
 @Injectable()
 export class LandmarkEffects {
     private apiURL = 'http://localhost:3000/api/landmark/';
-    constructor(private actions$: Actions, private http: HttpClient) { }
+    private actions$ = inject(Actions);
+    private http = inject(HttpClient);
     landmark$ = createEffect(() =>
         this.actions$.pipe(
             ofType(LandmarkActions.loadLandmarks),
