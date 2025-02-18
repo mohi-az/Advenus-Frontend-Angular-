@@ -2,13 +2,19 @@
     <div class="flex flex-row justify-between px-5">
         <div class="flex flex-row gap-5">
             <div class="flex flex-row gap-2"> <fa-icon [icon]="iconService.icons.Phone" /> +989128025131</div>
-            <div class="flex flex-row gap-2"><a href="mailto:support@advenus.com"> <fa-icon [icon]="iconService.icons.Mail" /> support&commat;advenus.com</a>
+            <div class="flex flex-row gap-2"><a href="mailto:support@advenus.com"> <fa-icon
+                        [icon]="iconService.icons.Mail" /> support&commat;advenus.com</a>
             </div>
         </div>
         <div class="invisible sm:visible flex flex-row gap-5">
             <fa-icon [icon]="iconService.icons.Facebook" />
             <fa-icon [icon]="iconService.icons.Twitter" />
             <fa-icon [icon]="iconService.icons.Youtube" />
+        </div>
+        <div>
+            <button class="btn btn-sm" [routerLink]='redirectToAdmin()'>
+                Admin pannel
+            </button>
         </div>
     </div>
     <div class="navbar">

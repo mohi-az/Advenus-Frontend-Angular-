@@ -9,12 +9,22 @@
             <div class="dropdown dropdown-end">
                 <div tabindex="0" role="button" class="btn btn-ghost btn-circle avatar">
                     <div class="w-10 rounded-full">
-                        <img alt="Avatar" src="images/User-Avatar.png" />
+                        <img [src]="user.picture" alt="Profile Picture"
+                            class="w-24 h-24 rounded-full border-4 border-primary">
                     </div>
                 </div>
                 <ul tabindex="0"
                     class="menu menu-sm dropdown-content bg-base-100 rounded-box z-[1] mt-3 w-52 p-2 shadow">
-                    <li><a>Logout</a></li>
+                    <li>
+                        <a href="#"
+                            class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-600 dark:hover:text-white"
+                            role="menuitem" routerLink="profile">Profile</a>
+                    </li>
+                    <li>
+                        <a (click)="logout()"
+                            class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-600 dark:hover:text-white"
+                            role="menuitem">Sign out</a>
+                    </li>
                 </ul>
             </div>
         </div>

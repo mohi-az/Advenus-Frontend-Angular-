@@ -5,4 +5,7 @@ import { Component } from "@angular/core";
 })
 
 export class Admin_DashboardComponent {
+    ngOnInit(){
+        debugger
+    }
 }

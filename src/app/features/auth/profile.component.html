@@ -1,0 +1,31 @@
+<div class="flex justify-center items-center min-h-screen bg-gray-100">
+  <div class="card w-96 bg-white shadow-xl p-6">
+    
+    <!-- Using @if for Auth0 user -->
+    @if (user) {
+      <div class="flex flex-col items-center">
+        <!-- Profile Picture -->
+        <img [src]="user.picture" alt="Profile Picture" class="w-24 h-24 rounded-full border-4 border-primary">
+        
+        <!-- User Information -->
+        <h2 class="text-xl font-bold text-gray-800 mt-4">{{ user.name }}</h2>
+        <p class="text-gray-500">{{ user.email }}</p>
+        
+        <!-- Additional Details (Using Optional Chaining) -->
+        <p class="text-gray-600 text-sm"><span class="font-semibold">Nickname:</span> {{ user?.nickname }}</p>
+        <p class="text-gray-600 text-sm"><span class="font-semibold">User ID:</span> {{ user?.sub }}</p>
+        <p class="text-gray-600 text-sm"><span class="font-semibold">Locale:</span> {{ user?.locale }}</p>
+        <p class="text-gray-500 text-xs mt-2">Last updated: {{ user?.updated_at | date:'medium' }}</p>
+
+        <!-- Logout Button -->
+        <button (click)="logout()" class="btn btn-error mt-4">Logout</button>
+      </div>
+    } @else {
+      <!-- Loading State -->
+      <div class="text-center">
+        <span class="loading loading-spinner text-primary"></span>
+      </div>
+    }
+    
+  </div>
+</div>

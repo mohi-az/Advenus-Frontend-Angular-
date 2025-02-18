@@ -39,11 +39,7 @@
                     <span class="text-3xl text-orange-500 font-bold">{{$index+1}}.</span>
                     <span class="font-Oswald text-4xl">{{city.name}}</span>
                     <span class="font-Handlee text-l"><fa-icon [icon]="icon.icons.Location" /> {{city.country}}</span>
-                    <span>{{city.description}}The birthplace of both the king of the Olympian gods and of modern
-                        European civilization, Crete is a Mediterranean jewel. It’s rich with archaeological and
-                        rbor or the fortresses and monasteries of
-                        Rethymonon. The awesome Minoan ruins of Malia date to 1900 BC, and majestic Mt. Ida is said to
-                        be home to the cave where Zeus was born.</span>
+                    <span>{{city.description}}</span>
                     <div>
                         @for(landmark of city.landmarks;track landmark){
                         @for(category of landmark.categories;track category){
