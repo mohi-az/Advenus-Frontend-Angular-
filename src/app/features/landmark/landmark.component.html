@@ -1,0 +1,67 @@
+<div class="flex flex-col w-full gap-10 min-h-[80vh] ">
+    <div class="relative h-64 w-full">
+        <div class="absolute inset-0">
+            <img ngSrc="upload/images/{{landmark?.imageURL}}" fill class="object-cover object-center" />
+        </div>
+        <div class="absolute inset-0 bg-black bg-opacity-45"></div>
+        <div class="absolute inset-0">
+            <div class=" flex h-full items-end justify-center">
+                <span class="text-white mb-10 px-10 uppercase font-Oswald 
+                font-bold text-6xl"> {{landmark?.name}}</span>
+            </div>
+        </div>
+    </div>
+    @if(loading()===true) {
+    <div class="w-full min-h-[70vh] flex justify-center items-baseline">
+        <div class="loading loading-bars loading-md m-auto text-accent"></div>
+    </div>
+    }
+    @else if( landmark !==null){
+    <div class="w-5/6 md:w-4/5  xl:w-2/3 m-auto flex  ">
+        <div class="flex flex-col  w-full ">
+            <div class="flex flex-col items-start">
+                <component-header [backgorundText]="'Travel'" [firstText]="'Door plan at'"
+                    [secondText]="landmark.name"></component-header>
+                <div class="w-3/5 divider divider-secondary"></div>
+                <div>
+                    {{landmark.description}}
+                </div>
+                <div class="text-2xl font-bold capitalize font-Oswald pt-10">
+                    Adventures In {{landmark.name}}
+                </div>
+            </div>
+            <div class=" flex flex-col md:flex-row gap-5 lg:gap-10 min-h-[70vh] ">
+                <div class="w-full md:w-1/2 flex flex-col items-start gap-2">
+                    <div class="flex flex-col w-full gap-5">
+                        <table class="table w-full md:w-3/4">
+                            <tr class="border-b-2 border-dotted border-gray-800">
+                                <td>Country</td>
+                                <td>{{landmark.countryName}}</td>
+                            </tr>
+                            <tr class="border-b-2 border-dotted border-gray-800">
+                                <td>City Name
+                                </td>
+                                <td>{{landmark.cityName}}</td>
+                            </tr>
+                            <tr class="border-b-2 border-dotted border-gray-800">
+                                <td>Visit Duration
+                                </td>
+                                <td>{{landmark.visitDuration}}</td>
+                            </tr>
+                        </table>
+                        <a href="https://www.tripadvisor.com/Search?q={{landmark.name}}" target="_blank" 
+                        class="btn  btn-wide btn-success cursor-pointer">
+                            View on TripAdvisor</a>
+                    </div>
+                </div>
+                <div class="w-full md:w-1/2 flex flex-col gap-6">
+                    <div class="relative w-full inset-0 h-96">
+                        <img ngSrc="upload/images/{{landmark.imageURL}}" fill class="object-contain object-center" />
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    }
+
+</div>

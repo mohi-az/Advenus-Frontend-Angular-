@@ -11,6 +11,7 @@ import { LoginComponent } from './features/auth/login.component';
 import { UserProfileComponent } from './features/auth/profile.component';
 import { authGuard } from './shared/services/auth-guard.service';
 import { AuthCallbackComponent } from './features/auth/auth-callback.component';
+import { LandmarkComponent } from './features/landmark/landmark.component';
 
 export const routes: Routes = [
     {
@@ -20,6 +21,7 @@ export const routes: Routes = [
             { path: 'home', component: HomeComponent },
             { path: 'destinations', component: DestinationsComponent },
             { path: 'destinations/:country/:city', component: CityComponent },
+            { path: 'destination/landmarks/:landmarkId', component: LandmarkComponent },
             { path: 'destinations/:name', component: DestinationsComponent },
              { path: '', redirectTo: 'home', pathMatch: 'full' }
 
