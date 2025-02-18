@@ -1,3 +1,43 @@
-<div>
-    Home
+<div class="flex flex-col gap-5">
+    <div class="stats shadow w-full">
+        <div class="stat bg-slate-100">
+            <div class="stat-figure text-secondary">
+                <fa-icon [icon]="iconService.adminIcons.AllCities" class="text-4xl text-green-600" />
+            </div>
+            <div class="stat-title">Total Cities</div>
+            <div class="stat-value">
+                @if(loadingCity) {<span class="loading loading-spinner text-black"></span>}
+                @else {{{ cities.length }}}</div>
+            <div class="stat-desc"> </div>
+        </div>
+        <div class="stat  bg-slate-100">
+            <div class="stat-figure text-secondary">
+                <fa-icon [icon]="iconService.adminIcons.Destination2" class="text-4xl text-blue-900" />
+            </div>
+            <div class="stat-title">Total Landmarks</div>
+            <div class="stat-value"> @if(loadingLandmark) {<span class="loading loading-spinner text-black"></span>}
+                @else {{{ landmarks.length }}}</div>
+            <div class="stat-desc"> </div>
+        </div>
+        <div class="stat  bg-slate-100">
+            <div class="stat-figure text-secondary">
+                <fa-icon [icon]="iconService.adminIcons.ActiveCity" class="text-4xl text-cyan-500" />
+            </div>
+            <div class="stat-title">Active Cities</div>
+            <div class="stat-value">
+                @if(loadingCity) {<span class="loading loading-spinner text-black"></span>}
+                @else {
+                {{ getActiveCities() }}}
+            </div>
+            <div class="stat-desc">Cities with a landmark</div>
+        </div>
+    </div>
+    <div>
+        <div class="h-[60vh] w-full m-auto text-center">
+            @if(loadingCity){<span class=" loading loading-spinner loading-lg text-success m-auto"></span>}
+            @else {
+            <component-map [latLngs]="cityCoordinates">
+            </component-map>}
+        </div>
+    </div>
 </div>

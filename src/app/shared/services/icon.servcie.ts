@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
-import { faCameraRetro, faEnvelope, faHeadset ,faMapMarkerAlt, faMap, faMapLocationDot, faDashboard, faCity, faMapPin, faSearch} from '@fortawesome/free-solid-svg-icons';
+import { faCameraRetro, faEnvelope, faHeadset ,faMapMarkerAlt, faMap, faMapLocationDot, faDashboard, faCity, faMapPin, faSearch,
+     faEarth, faTreeCity, faLocation} from '@fortawesome/free-solid-svg-icons';
 import { faAirbnb, faAvianex, faEnvira, faFacebook, faFly, faFortAwesome, faGithubSquare, faLeanpub, faLinkedin, faTwitter, faYoutube } from '@fortawesome/free-brands-svg-icons';
 
 @Injectable({
@@ -26,6 +27,9 @@ export class IconService {
         Dashboard: faDashboard,
         City:faCity,
         Country:faMap,
-        Destination:faMapPin
+        Destination:faMapPin,
+        ActiveCity:faTreeCity,
+        AllCities:faEarth,
+        Destination2:faLocation
     };
 }
