@@ -2,7 +2,7 @@ import { Component, inject } from "@angular/core";
 import { IntroComponent } from "./intro/intro.component";
 import { CategoriesComponent } from "./categories/categories.component";
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome'
-import { IconService } from "../../shared/services/icon.servcie";
+import { IconService } from "../../shared/services/icon.service";
 import { Store } from "@ngrx/store";
 import { AppState } from "../../states/app.state";
 import * as CityAction from '../../states/city/city.actions';

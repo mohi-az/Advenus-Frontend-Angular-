@@ -5,11 +5,12 @@ import { catchError, map, mergeMap } from 'rxjs/operators';
 import { of } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { City } from '../../shared/types/types';
+import { environment } from '../../../environments/environment';
 
 @Injectable()
 export class CityEffects {
-  private apiURL = 'http://localhost:3000/api/city/';
-  private actions$ = inject(Actions);
+  private apiURL = environment.apiUrl + '/city/';
+    private actions$ = inject(Actions);
   private http = inject(HttpClient);
   loadCities$ = createEffect(() =>
     this.actions$.pipe(

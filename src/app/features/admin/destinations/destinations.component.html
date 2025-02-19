@@ -25,14 +25,13 @@
                     </div>
 
                 </div>
-                <table class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
+                <table data-testid="table" class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
                     <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
                         <tr>
 
                             <th scope="col" class="px-6 py-3">Name</th>
                             <th scope="col" class="px-6 py-3">Location</th>
                             <th scope="col" class="px-6 py-3">visit Duration</th>
-                            <!-- <th scope="col" class="px-6 py-3">Categories</th> -->
                             <th scope="col" class="px-6 py-3">Action</th>
                         </tr>
                     </thead>
@@ -53,11 +52,6 @@
                                 }
                                 @else {-}
                             </td>
-                            <!-- <td class="px-6 py-4 flex flex-grow flex-wrap gap-1">
-                                @for(cat of landmark.categories; track $index){
-                                <div class="badge badge-secondary">{{cat.name}}</div>
-                                }
-                            </td> -->
                             <td class="px-6 py-4">
                                 <button (click)="openModal(landmark)" class=" btn btn-success btn-sm ">View
                                     Details</button>
@@ -94,8 +88,8 @@
                     </select>
                     <div class="flex flex-row gap-5 justify-end">
                         @if(selectedLandmark) {
-                        <button [disabled]="landmarkForm.invalid || isFormBusy"
-                            class="btn btn-secondary  btn-md btn-wide" (click)="deleteLandmark()">Delete</button>
+                        <button [disabled]="isFormBusy" class="btn btn-secondary  btn-md btn-wide"
+                            (click)="deleteLandmark()">Delete</button>
                         }
                         <button type="submit" [disabled]="landmarkForm.invalid || isFormBusy"
                             class="btn btn-neutral btn-wide  btn-md">Submit</button>
@@ -116,7 +110,7 @@
                         @if (landmarkForm.get('visitDuration')?.errors?.['max']) {
                         <li>Visit Duration cannot exceed 500.</li>
                         }
-                        @if (landmarkForm.get('city')?.errors?.['required']) {
+                        @if (landmarkForm.get('city')?.errors?.['required'] && filteredCity.length>1) {
                         <li>City is required.</li>
                         }
                     </ul>

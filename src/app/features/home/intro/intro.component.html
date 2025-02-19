@@ -1,4 +1,4 @@
-<div class="flex w-full flex-col md:flex-row px-2 md:px-5 lg:px-10 pt-5 h-[90vh]">
+<div class="flex w-full flex-col md:flex-row px-2 md:px-5 lg:px-10 pt-5 md:h-[70vh] lg:h-[90vh]">
     <div class="w-full md:w-1/2 flex flex-col md:justify-between md:my-32 gap-5 md:gap-0 z-20">
         <div class="flex flex-col gap-2 md:gap-5 w-1/2">
             <span class="font-Handlee text-2xl lg:text-4xl font-bold">Discover The</span>
@@ -16,16 +16,21 @@
 
         </div>
         <div class="flex flex-col gap-5">
-            <div class="bg-white w-full md:w-fit h-fit p-2 drop-shadow-xl flex flex-col md:flex-row gap-4 items-center opacity-90">
+            <div
+                class="bg-white w-full md:w-fit h-fit p-2 drop-shadow-xl flex flex-col md:flex-row gap-4 items-center opacity-90">
                 <label class="input input-success w-full md:w-32 lg:w-40 xl:w-56 flex items-center gap-2 bg-slate-50 ">
                     <fa-icon [icon]="countryIcon" />
-                    <input type="text" class="grow" value="country" />
+                    <app-component-searchable-select [placeholder]="'Select a country...'"
+                        [Items]="StaticDataService.getCountries()" (selectedItemChange)="onCountryelected($event)">
+                    </app-component-searchable-select>
                 </label>
                 <label class="input input-success w-full md:w-32 lg:w-40 xl:w-56 flex items-center gap-2 bg-slate-50 ">
                     <fa-icon [icon]="cityIcon" />
-                    <input type="text" class="grow" value="city" />
+                    <app-component-searchable-select [placeholder]="'Select a city...'"
+                     [Items]="filteredCities" (selectedItemChange)="onCitySelected($event)">
+                    </app-component-searchable-select>
                 </label>
-                <button class="btn btn-accent w-full md:w-24 lg:w-32 xl:w-48">Start a journey</button>
+                <button class="btn btn-accent w-full md:w-24 lg:w-32 xl:w-48" (click)="goToDestination()">Start a journey</button>
             </div>
             <span class="text-sm md:text-base text-gray-700 text-center md:text-left">
                 Discover amazing places with just a few clicks! Start your journey today.

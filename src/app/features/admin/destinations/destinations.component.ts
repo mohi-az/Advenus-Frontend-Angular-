@@ -1,6 +1,6 @@
 import { Component, inject, ViewChild } from "@angular/core";
 import { Validators, ReactiveFormsModule, FormBuilder, FormControl } from '@angular/forms';
-import { IconService } from "../../../shared/services/icon.servcie";
+import { IconService } from "../../../shared/services/icon.service";
 import { FontAwesomeModule } from "@fortawesome/angular-fontawesome";
 import { ComponentModal } from "../../../shared/components/modal/modal.component";
 import { Store } from "@ngrx/store";
@@ -20,18 +20,18 @@ import { ToastrService } from 'ngx-toastr';
   imports: [ReactiveFormsModule, FontAwesomeModule, ComponentModal],
 
 })
-export class Admin_DestinationsComponent {
+export class AdminDestinationsComponent {
   iconService = inject(IconService);
   statisDataService = inject(StaticDataService)
-  toastrService = inject(ToastrService)
-  actions$ = inject(Actions);
-  store = inject(Store<AppState>);
+  private toastrService = inject(ToastrService)
+  private actions$ = inject(Actions);
+  private store = inject(Store<AppState>);
   formBuilder = inject(FormBuilder);
   @ViewChild(ComponentModal) modal!: ComponentModal;
   landmarks: LandmarkView[] = []
   filteredLandmarks: LandmarkView[] = []
   search = new FormControl('');
-  loading=false;
+  loading = false;
   isFormBusy = false;
   selectedLandmark: LandmarkView | null = null
   filteredCity: { id: number; name: string; countryId: number; }[] = [];
@@ -99,10 +99,12 @@ export class Admin_DestinationsComponent {
     let countryName = this.statisDataService.getCountries().find(c => c.name === this.landmarkForm.value.country)?.name ?? ''
     if (!this.selectedLandmark) {
       this.addLandmark(cityName, countryName, formValue);
+      this.handleResponse("add");
     } else {
       this.updateLandmark(cityName, countryName, formValue);
+      this.handleResponse("update");
     }
-    this.handleResponse();
+
   }
   private getLandmarkObject(cityName: string, countryName: string, formValue: LandmarkFormValue): any {
     return {
@@ -121,22 +123,21 @@ export class Admin_DestinationsComponent {
       this.store.dispatch(LandmarkActions.updateLandmarks({
         Landmark: landmark,
         landmarkId: this.selectedLandmark.id,
-
       }));
   }
   private addLandmark(cityName: string, countryName: string, formValue: LandmarkFormValue): void {
     const landmark = this.getLandmarkObject(cityName, countryName, formValue);
     this.store.dispatch(LandmarkActions.addLandmarks({ Landmark: landmark }));
-
   }
-  private handleResponse(): void {
+  private handleResponse(actionType: 'add' | 'update'): void {
+    const successAction = actionType === 'add' ? LandmarkActions.addLandmarksSuccess : LandmarkActions.updateLandmarksSuccess;
     this.actions$.pipe(
-      ofType(LandmarkActions.addLandmarksSuccess, LandmarkActions.updateLandmarksSuccess),
+      ofType(successAction),
       take(1),
       tap((response) => {
         if (response) {
-          const toastNumber = this.toastrService.success('The landmark has been added successfully');
-          this.modal.closeModal();
+          const toastNumber = this.toastrService.success(actionType === 'add' ? 'The landmark has been added successfully' : 'The landmark has been updated successfully');
+          this.modal?.closeModal();
           this.landmarkForm.reset();
         }
         else

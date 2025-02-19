@@ -36,7 +36,7 @@
         <div class="h-[60vh] w-full m-auto text-center">
             @if(loadingCity){<span class=" loading loading-spinner loading-lg text-success m-auto"></span>}
             @else {
-            <component-map [latLngs]="cityCoordinates">
+            <component-map data-testid="map" [latLngs]="cityCoordinates">
             </component-map>}
         </div>
     </div>

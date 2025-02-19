@@ -6,7 +6,7 @@ export interface LandmarkState {
     loading: boolean,
     error: string | null;
 }
-const initialValues: LandmarkState = {
+export const initialValues: LandmarkState = {
     landmarks: [],
     error: null,
     loading: false
@@ -27,6 +27,9 @@ export const landmarkReducer = createReducer(
     on(LandmarkActions.updateLandmarksFailure, (state, { error }) => ({ ...state, error: error, loading: false })),
 
     on(LandmarkActions.deleteLandmarks, (state) => ({ ...state, loading: true })),
-    on(LandmarkActions.deleteLandmarksSuccess, (state, {  LandmarksId }) => ({ ...state, landmarks: state.landmarks.filter(l => l.id !== LandmarksId), loading: false })),
+    on(LandmarkActions.deleteLandmarksSuccess, (state, {  LandmarksId }) => ({ ...state, 
+        // Removes the deleted landmark from the state
+        landmarks: state.landmarks.filter(l => l.id !== LandmarksId),
+         loading: false })),
     on(LandmarkActions.deleteLandmarksFailure, (state, { error }) => ({ ...state, error: error, loading: false })),
 )

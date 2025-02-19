@@ -9,7 +9,7 @@
         @else {
         <div class="relative overflow-x-auto shadow-md sm:rounded-lg">
             <div
-                class="flex items-center justify-between flex-column md:flex-row flex-wrap space-y-4 md:space-y-0 py-4 bg-white dark:bg-gray-900">
+                class="flex items-center justify-between gap-4 flex-column md:flex-row flex-wrap space-y-4 md:space-y-0 py-4 bg-white dark:bg-gray-900">
 
                 <div class="w-full flex flex-row gap-4 justify-end">
                     <div>
@@ -25,15 +25,16 @@
                     </div>
 
                 </div>
-                <table class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
+                <table data-testid="table" class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
                     <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
                         <tr>
 
                             <th scope="col" class="px-6 py-3">City Name</th>
                             <th scope="col" class="px-6 py-3">Country Name</th>
+                            <th scope="col" class="px-6 py-3 hidden lg:block" >Native Name</th>
                             <th scope="col" class="px-6 py-3">Continent</th>
-                            <th scope="col" class="px-6 py-3">Population</th>
-                            <th scope="col" class="px-6 py-3">Action</th>
+                            <th scope="col" class="px-6 py-3 hidden lg:block">Population</th>
+                            <th scope="col" class="px-6 py-3">Actions</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -45,10 +46,10 @@
                                 {{city.name}}
                             </th>
                             <td class="px-6 py-4">{{city.country}}</td>
-                            <td class="px-6 py-4">{{city.name_native?city.name_native:'-'}}</td>
-                            <td class="px-6 py-4">{{city.continent?city.continent:'-'}}</td>
-                            <td class="px-6 py-4">{{city.population?city.population:'-'}}</td>
-                            <td class="px-6 py-4">
+                            <td class="px-6 py-4 hidden lg:block">{{city.name_native?city.name_native:'-'}}</td>
+                            <td class="px-6 py-4 ">{{city.continent?city.continent:'-'}}</td>
+                            <td class="px-6 py-4 hidden lg:block" >{{city.population?city.population:'-'}}</td>
+                            <td class="px-6 py-4 ">
                                 <button (click)="openModal(city)" class=" btn btn-success btn-sm ">View
                                     Details</button>
                             </td>
@@ -87,9 +88,9 @@
                         class="input input-bordered w-full input-md" placeholder="Population" />
                     <input type="number" id="founded" formControlName="founded"
                         class="input input-bordered w-full input-md" placeholder="Founded year" />
-                    <div class="flex flex-row gap-5 justify-end">
+                    <div class="flex flex-col md:flex-row gap-5 justify-end">
                         @if(selectedCity) {
-                        <button [disabled]="cityFormGroup.invalid || isFormBusy"
+                        <button [disabled]=" isFormBusy"
                             class="btn btn-secondary  btn-md btn-wide" (click)="deleteCity()">Delete</button>
                         }
                         <button type="submit" [disabled]="cityFormGroup.invalid || isFormBusy"

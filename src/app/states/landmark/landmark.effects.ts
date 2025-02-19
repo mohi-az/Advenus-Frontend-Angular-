@@ -4,9 +4,10 @@ import * as LandmarkActions from './landmark.actions'
 import { catchError, map, mergeMap, of } from "rxjs";
 import { LandmarkView } from "../../shared/types/types";
 import { Injectable,inject } from "@angular/core";
+import { environment } from "../../../environments/environment";
 @Injectable()
 export class LandmarkEffects {
-    private apiURL = 'http://localhost:3000/api/landmark/';
+    private apiURL = environment.apiUrl + '/landmark/';
     private actions$ = inject(Actions);
     private http = inject(HttpClient);
     landmark$ = createEffect(() =>

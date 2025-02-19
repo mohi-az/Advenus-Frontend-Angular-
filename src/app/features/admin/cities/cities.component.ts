@@ -1,5 +1,5 @@
 import { Component, inject, ViewChild } from "@angular/core";
-import { IconService } from "../../../shared/services/icon.servcie";
+import { IconService } from "../../../shared/services/icon.service";
 import { StaticDataService } from "../../../shared/services/staticData.service";
 import { ToastrService } from "ngx-toastr";
 import { Actions, ofType } from "@ngrx/effects";
@@ -9,7 +9,7 @@ import { ReactiveFormsModule, FormBuilder, FormControl, Validators } from "@angu
 import { ComponentModal } from "../../../shared/components/modal/modal.component";
 import { City, CityFormValue } from "../../../shared/types/types";
 import * as CityActions from '../../../states/city/city.actions'
-import { map, mergeMap, take, tap } from "rxjs";
+import { mergeMap, take, tap } from "rxjs";
 import { selectAllCities, selectLoading } from "../../../states/city/city.selectors";
 import { FontAwesomeModule } from "@fortawesome/angular-fontawesome";
 
@@ -19,14 +19,15 @@ import { FontAwesomeModule } from "@fortawesome/angular-fontawesome";
     imports: [FontAwesomeModule, ReactiveFormsModule, ComponentModal]
 })
 
-export class Admin_CitiesComponent {
+export class AdminCitiesComponent {
 
     iconService = inject(IconService);
     statisDataService = inject(StaticDataService)
-    toastrService = inject(ToastrService)
-    actions$ = inject(Actions);
-    store = inject(Store<AppState>);
-    formBuilder = inject(FormBuilder);
+    private toastrService = inject(ToastrService)
+    private actions$ = inject(Actions);
+    private store = inject(Store<AppState>);
+    private formBuilder = inject(FormBuilder);
+
     @ViewChild(ComponentModal) modal!: ComponentModal;
     cities: City[] = []
     filteredcities: City[] = []
@@ -35,6 +36,7 @@ export class Admin_CitiesComponent {
     isFormBusy = false;
     selectedCity: City | null = null
     filteredCity: { id: number; name: string; countryId: number; }[] = [];
+
     cityFormGroup = this.formBuilder.group({
         city: ['', [Validators.required]],
         description: ['', Validators.required],
@@ -54,6 +56,7 @@ export class Admin_CitiesComponent {
         });
     }
     private loadCities(): void {
+        // Fetch cities from the store, dispatch action if empty
         this.store.select(selectAllCities).pipe(
             mergeMap(cities => {
                 if (cities.length) return [cities];
@@ -107,10 +110,11 @@ export class Admin_CitiesComponent {
         const cityName = selectedCity ? selectedCity.name : '';
         if (!this.selectedCity) {
             this.addCity(cityName, formValue);
+            this.handleResponse('add');
         } else {
             this.updateCity(cityName, formValue);
+            this.handleResponse('update');
         }
-        this.handleResponse();
     }
     private addCity(cityName: string, formValue: CityFormValue): void {
         this.store.dispatch(CityActions.addCity({
@@ -120,11 +124,12 @@ export class Admin_CitiesComponent {
 
     private updateCity(cityName: string, formValue: CityFormValue): void {
         const city = this.getCityObject(cityName, formValue);
-        delete city.id;
+        delete city.id; // Remove the city ID before updating to avoid conflicts with the store's state
         this.store.dispatch(CityActions.updateCity({
             cities: city,
             cityId: formValue.city ? parseInt(formValue.city) : 0,
         }));
+
     }
     private getCityObject(cityName: string, formValue: CityFormValue): any {
         return {
@@ -140,14 +145,21 @@ export class Admin_CitiesComponent {
             founded: this.cityFormGroup.value.founded?.toString() ?? ''
         };
     }
-    private handleResponse(): void {
+    deleteCity(): void {
+        if (this.selectedCity) {
+            this.isFormBusy = true;
+            this.store.dispatch(CityActions.deleteCity({ cityId: this.selectedCity.id }));
+        }
+    }
+    private handleResponse(actionType: 'add' | 'update'): void {
+        const successAction = actionType === 'add' ? CityActions.addCitySuccess : CityActions.updateCitySuccess;
         this.actions$.pipe(
-            ofType(CityActions.addCitySuccess, CityActions.updateCitySuccess),
+            ofType(successAction),
             take(1),
             tap(response => {
                 if (response) {
-                    this.toastrService.success('The City has been added successfully');
-                    this.modal.closeModal();
+                    this.toastrService.success(actionType === 'add' ? 'The City has been added successfully' : "The landmark has been deleted successfully");
+                    this.modal?.closeModal();
                     this.cityFormGroup.reset();
                 } else {
                     this.toastrService.error('Something went wrong, please try again!');
@@ -159,28 +171,6 @@ export class Admin_CitiesComponent {
             this.cityFormGroup.controls.country.enable();
             this.store.dispatch(CityActions.loadCities());
         });
-    }
-    deleteCity(): void {
-        if (this.selectedCity) {
-            this.isFormBusy = true;
-            this.store.dispatch(CityActions.deleteCity({ cityId: this.selectedCity.id }));
-            this.actions$.pipe(
-                ofType(CityActions.deleteCitySuccess),
-                take(1),
-                map(response => {
-                    if (response) {
-                        this.toastrService.success('The landmark has been deleted successfully');
-                        this.modal.closeModal();
-                        this.cityFormGroup.reset();
-                    }
-                    else {
-                        this.toastrService.error('Something went wrong, Please try again!');
-                    }
-                    this.isFormBusy = false;
-                }
-                )
-            ).subscribe();
-        }
     }
     GetCity(): void {
         if (this.cityFormGroup.controls.country.value) {

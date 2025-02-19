@@ -12,11 +12,11 @@ import { LandmarkView } from '../types/types';
   @for (landmark of landmarks; track $index) {
      <div class="relative w-full mb-4 break-inside-avoid overflow-hidden rounded-lg cursor-pointer transition-transform duration-300 hover:scale-105"
         (click)="goToDetail(landmark.id)">
-          <img [src]="'upload/images/'+landmark.imageURL" [alt]="landmark.name" class="w-full h-auto rounded-lg">
+          <img [src]="landmark.imageURL" [alt]="landmark.name" class="w-full h-auto rounded-lg">
         <div 
           class="absolute inset-0 flex flex-col justify-center items-center bg-black bg-opacity-60 text-white opacity-0 hover:opacity-100 transition-opacity duration-300">
           <h3 class="text-lg font-bold">{{ landmark.name }}</h3>
-          <p class="text-sm px-4 text-center">{{ landmark.description || 'Click to explore' }}</p>
+          <p class="text-sm px-4 text-center">{{'Click to explore' }}</p>
         </div>
       </div>
      }

@@ -1,8 +1,9 @@
 <div class="flex flex-col ">
-    <app-home-intro />
-    <div class="w-full grid grid-rows-2 grid-cols-4  md:grid-rows-1 md:grid-cols-7 -mt-40 md:-mt-0 gap-10 md:gap-20 px-10 justify-center md:pt-28 md:pb-36">
+    <app-home-intro data-testid="intro"/>
+    <div class="w-full grid grid-rows-2 grid-cols-4  md:grid-rows-1 md:grid-cols-7 -mt-40 
+    md:-mt-0 gap-10 md:gap-20 px-10 justify-center py-20 md:pt-28 md:pb-36">
         @for (brand of Brands.iconsWithTitle; track brand.name) {
-        <div class="tooltip" [attr.data-tip]="brand.name">
+        <div class="tooltip" [attr.data-tip]="brand.name" data-testid="brands">
             <div class="flex flex-col gap-2 text-center">
                 <fa-icon [icon]="brand.icon"  class="hover:text-orange-400 cursor-pointer text-5xl md:text-4xl  xl:text-7xl"  />
                 <span class="font-Handlee ">{{brand.name}}</span>
@@ -10,5 +11,5 @@
         </div>
         }
     </div>
-    <app-home-categories />
+    <app-home-categories data-testid="categories" />
 </div>

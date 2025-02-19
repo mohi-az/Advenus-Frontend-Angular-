@@ -1,25 +1,27 @@
 <div class="flex flex-col ">
     <div class="flex flex-row justify-between px-5">
-        <div class="flex flex-row gap-5">
+        <div class="flex flex-row gap-5" data-testid="contact">
             <div class="flex flex-row gap-2"> <fa-icon [icon]="iconService.icons.Phone" /> +989128025131</div>
             <div class="flex flex-row gap-2"><a href="mailto:support@advenus.com"> <fa-icon
                         [icon]="iconService.icons.Mail" /> support&commat;advenus.com</a>
             </div>
         </div>
-        <div class="invisible sm:visible flex flex-row gap-5">
-            <fa-icon [icon]="iconService.icons.Facebook" />
-            <fa-icon [icon]="iconService.icons.Twitter" />
-            <fa-icon [icon]="iconService.icons.Youtube" />
-        </div>
-        <div>
-            <button class="btn btn-sm" [routerLink]='redirectToAdmin()'>
-                Admin pannel
-            </button>
+        <div class="flex flex-row gap-2">
+            <div class="invisible sm:visible flex flex-row gap-5" data-testid="social">
+                <fa-icon [icon]="iconService.icons.Facebook" />
+                <fa-icon [icon]="iconService.icons.Twitter" />
+                <fa-icon [icon]="iconService.icons.Youtube" />
+            </div>
+            <div>
+                <button class="btn btn-ghost btn-xs link" [routerLink]='redirectToAdmin()'>
+                    Admin pannel
+                </button>
+            </div>
         </div>
     </div>
     <div class="navbar">
         <div class="navbar-start">
-            <div class="dropdown">
+            <div class="dropdown" data-testid="burgerMenu">
                 <div tabindex="0" role="button" class="btn btn-ghost lg:hidden">
                     <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24"
                         stroke="currentColor">
@@ -31,7 +33,6 @@
                     class="menu menu-sm dropdown-content bg-base-100 rounded-box mt-3 w-52 p-2 shadow uppercase z-50">
                     <li><a class="hover:text-orange-600" [routerLink]="['/']">Home</a></li>
                     <li><a class="hover:text-orange-600" [routerLink]="['/destinations/']">Destinations</a></li>
-                    <li><a class="hover:text-orange-600">News</a></li>
                     <div class="flex flex-row gap-5 justify-center">
                         <fa-icon [icon]="iconService.icons.Facebook" class="text-green-900 cursor-pointer" />
                         <fa-icon [icon]="iconService.icons.Twitter" class="text-green-900 cursor-pointer" />
@@ -43,11 +44,10 @@
             <a class="text-xl lg:text-2xl cursor-pointer font-bold" routerLink="/">Advenus<fa-icon class="pl-3"
                     [icon]="iconService.icons.Logo" /></a>
         </div>
-        <div class="navbar-center hidden lg:flex font-bold">
+        <div class="navbar-center hidden lg:flex font-bold" data-testid="menuFull" >
             <ul class="menu menu-horizontal px-1">
                 <li><a class="hover:text-orange-600 " [routerLink]="['/']">Home</a></li>
                 <li> <a class="hover:text-orange-600" [routerLink]="['/destinations/']">Destinations</a></li>
-                <li><a class="hover:text-orange-600">News</a></li>
             </ul>
         </div>
     </div>

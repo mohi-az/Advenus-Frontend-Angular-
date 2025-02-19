@@ -7,7 +7,7 @@ import { mergeMap } from "rxjs";
 import { City, LandmarkView } from "../../../shared/types/types";
 import { selectLandmarks, selectLoading as landmarkselectLoading } from "../../../states/landmark/landmark.selectors";
 import * as LandmarkActions from '../../../states/landmark/landmark.actions'
-import { IconService } from "../../../shared/services/icon.servcie";
+import { IconService } from "../../../shared/services/icon.service";
 import { FontAwesomeModule } from "@fortawesome/angular-fontawesome";
 import { MapComponent } from "../../../shared/components/map.component";
 
@@ -17,15 +17,16 @@ import { MapComponent } from "../../../shared/components/map.component";
     imports: [FontAwesomeModule, MapComponent]
 })
 
-export class Admin_DashboardComponent {
+export class AdminDashboardComponent {
     iconService = inject(IconService);
-    store = inject(Store<AppState>);
+    private store = inject(Store<AppState>);
     loadingCity = false;
     loadingLandmark = false;
     cities: City[] = []
-    cityCoordinates: { lat: number; lng: number, title: string }[] = [];
+    cityCoordinates: { lat: number; lng: number, title: string }[] = []; // Coordinates for cities on the map
     landmarks: LandmarkView[] = []
 
+     // Load initial data for cities and landmarks to show  dashboard metrics
     ngOnInit() {
         this.loadCities();
         this.store.select(selectLoading).subscribe(isLoading => {
@@ -50,7 +51,7 @@ export class Admin_DashboardComponent {
                 .map(city => ({
                     lat: parseFloat(city.latitude),
                     lng: parseFloat(city.longitude),
-                    title:city.name
+                    title: city.name
                 }));
         });
     }
@@ -69,6 +70,7 @@ export class Admin_DashboardComponent {
         })
     }
     public getActiveCities(): number {
+          // Returns the count of cities to show dashboard metrics
         return this.cities.filter(city => city.landmarks.length > 0).length
     }
 }

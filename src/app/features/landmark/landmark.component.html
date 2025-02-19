@@ -1,7 +1,7 @@
 <div class="flex flex-col w-full gap-10 min-h-[80vh] ">
     <div class="relative h-64 w-full">
         <div class="absolute inset-0">
-            <img ngSrc="upload/images/{{landmark?.imageURL}}" fill class="object-cover object-center" />
+            <img ngSrc="{{landmark?.imageURL}}" fill class="object-cover object-center" />
         </div>
         <div class="absolute inset-0 bg-black bg-opacity-45"></div>
         <div class="absolute inset-0">
@@ -56,7 +56,7 @@
                 </div>
                 <div class="w-full md:w-1/2 flex flex-col gap-6">
                     <div class="relative w-full inset-0 h-96">
-                        <img ngSrc="upload/images/{{landmark.imageURL}}" fill class="object-contain object-center" />
+                        <img ngSrc="{{landmark.imageURL}}" fill class="object-contain object-center" />
                     </div>
                 </div>
             </div>

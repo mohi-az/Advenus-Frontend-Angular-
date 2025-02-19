@@ -9,7 +9,7 @@ import { LandmarkView } from "../../shared/types/types";
 import { HeaderComponent } from "../../shared/components/header.component";
 import { NgOptimizedImage } from "@angular/common";
 import { FontAwesomeModule } from "@fortawesome/angular-fontawesome";
-import { IconService } from "../../shared/services/icon.servcie";
+import { IconService } from "../../shared/services/icon.service";
 
 
 @Component({
@@ -50,7 +50,6 @@ export class LandmarkComponent {
                 return [landmarks];
             })
         ).subscribe(landmarks => {
-            debugger
             this.landmark = landmarks.filter(landmark => landmark.id === parseInt(this.landmarkId ?? ''))[0];
         });
     }

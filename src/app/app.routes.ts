@@ -2,11 +2,11 @@ import { Routes } from '@angular/router';
 import { HomeComponent } from './features/home/home.component';
 import { DestinationsComponent } from './features/destinations/destinations.component';
 import { CityComponent } from './features/city/city.component';
-import { Admin_Layout } from './features/admin/adminLayout/adminLayout.component';
-import { Admin_DashboardComponent } from './features/admin/dashboard/dashboard.component';
+import { AdminLayoutComponent } from './features/admin/adminLayout/adminLayout.component';
+import { AdminDashboardComponent } from './features/admin/dashboard/dashboard.component';
 import { LayoutComponent } from './layout/layout.component';
-import { Admin_DestinationsComponent } from './features/admin/destinations/destinations.component';
-import { Admin_CitiesComponent } from './features/admin/cities/cities.component';
+import { AdminDestinationsComponent } from './features/admin/destinations/destinations.component';
+import { AdminCitiesComponent } from './features/admin/cities/cities.component';
 import { LoginComponent } from './features/auth/login.component';
 import { UserProfileComponent } from './features/auth/profile.component';
 import { authGuard } from './shared/services/auth-guard.service';
@@ -28,12 +28,12 @@ export const routes: Routes = [
         ]
     }, {
         path: 'admin',
-        component: Admin_Layout,
+        component: AdminLayoutComponent,
         canActivate: [authGuard],
         children: [
-            { path: 'dashboard', component: Admin_DashboardComponent, },
-            { path: 'destinations', component: Admin_DestinationsComponent, },
-            { path: 'cities', component: Admin_CitiesComponent, },
+            { path: 'dashboard', component: AdminDashboardComponent, },
+            { path: 'destinations', component: AdminDestinationsComponent, },
+            { path: 'cities', component: AdminCitiesComponent, },
             { path: 'profile', component: UserProfileComponent, },
         ]
     },
@@ -41,7 +41,7 @@ export const routes: Routes = [
         path: 'auth',
         children: [
             { path: 'login', component: LoginComponent },
-            { path: 'callback', component: AuthCallbackComponent },
+            { path: 'callback', component: AuthCallbackComponent }, // // handle auth0
 
         ]
     }

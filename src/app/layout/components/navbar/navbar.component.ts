@@ -1,6 +1,6 @@
 import { Component, inject } from "@angular/core";
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
-import { IconService } from "../../../shared/services/icon.servcie";
+import { IconService } from "../../../shared/services/icon.service";
 import { RouterModule } from '@angular/router';
 import { AuthService } from "@auth0/auth0-angular";
 @Component({

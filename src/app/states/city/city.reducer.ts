@@ -29,6 +29,9 @@ export const cityReducer = createReducer(
   on(CityActions.updateCityFailure, (state, { error }) => ({ ...state, loading: false, error })),
 
   on(CityActions.deleteCity, (state) => ({ ...state, loading: true })),
-  on(CityActions.deleteCitySuccess, (state, { cityId }) => ({ ...state, cities: state.cities.filter(city => city.id !== cityId), loading: false })),
+  on(CityActions.deleteCitySuccess, (state, { cityId }) => ({ ...state, 
+    // Removes the deleted city from the state
+    cities: state.cities.filter(city => city.id !== cityId),
+     loading: false })),
   on(CityActions.deleteCityFailure, (state, { error }) => ({ ...state, loading: false, error: error }))
 );

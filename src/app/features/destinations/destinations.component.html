@@ -1,4 +1,4 @@
-<div class="flex flex-col  gap-10 min-h-[70vh]">
+<div class="flex flex-col  gap-10 min-h-[70vh] pb-14">
     <div class="relative h-64 w-full">
         <div class="absolute inset-0">
             <img ngSrc="images/landmarks.jpg" fill class="object-cover object-center" />
@@ -12,17 +12,36 @@
         </div>
     </div>
     <div class="w-5/6 md:w-4/5  xl:w-2/3 flex flex-col m-auto">
+        <div class="w-1/4 flex flex-row gap-5 items-center">
+            <label for="continent-select" class="block text-gray-700 font-medium mb-2">Select Continent:</label>
+            <select class="border border-gray-300 rounded-md p-2 select-success" (change)="selectContinent($event)">
+                <option value="">All Continents</option>
+                <option value="asia">Asia</option>
+                <option value="europe">Europe</option>
+                <option value="africa">Africa</option>
+                <option value="North America">North America</option>
+                <option value="South America">South America</option>
+                <option value="australia">Australia</option>
+                <option value="antarctica">Antarctica</option>
+            </select>
+        </div>
+        <div class="divider text-accent"></div>
         <span class="text-xl md:text-3xl ">Top - World</span>
         <div class="w-full">
-            These destinations are our top spots for good reason—they’ve got everything travelers are looking for and
-            more.
-            <br />
-            The Travelers’ Choice Awards Best of the Best title celebrates the highest level of excellence in travel.
-            It’s awarded to those who receive a high volume of above-and-beyond reviews and opinions from the
-            Tripadvisor community over a 12-month period. Out of our 8 million listings, fewer than 1% achieve this
-            milestone.
-            <div class="divider text-accent"></div>
+            <div class="flex flex-row">
+                These destinations are our top spots for good reason—they’ve got everything travelers are looking for
+                and
+                more.
+                <br />
+                The Travelers’ Choice Awards Best of the Best title celebrates the highest level of excellence in
+                travel.
+                It’s awarded to those who receive a high volume of above-and-beyond reviews and opinions from the
+                Tripadvisor community over a 12-month period. Out of our 8 million listings, fewer than 1% achieve this
+                milestone.
+
+            </div>
         </div>
+        <div class="divider text-accent"></div>
         <div>
             @if(loading()===true) {
             <div class="w-full min-h-[70vh] flex justify-center items-baseline">
@@ -30,20 +49,26 @@
             </div>
             }
             @if(cities.length>0){
-            @for (city of cities; track city) {
+            @for (city of filteredCities; track city) {
             <div [ngClass]="{'flex-row-reverse' :$index%2===0}" class="flex h-96">
                 <div class=" relative w-1/2 ">
-                    <img [ngSrc]="'/upload/images/'+city.landmarks[0].image_url" [alt]="city.landmarks[0].name" fill class="object-fill" />
+                    @if(city.landmarks[0].image_url){
+                    <img [ngSrc]="city.landmarks[0].image_url" [alt]="city.landmarks[0].name" fill
+                        class="object-fill" />}
                 </div>
                 <div class="w-1/2 flex flex-col p-5 gap-2">
-                    <span class="text-3xl text-orange-500 font-bold">{{$index+1}}.</span>
-                    <span class="font-Oswald text-4xl">{{city.name}}</span>
-                    <span class="font-Handlee text-l"><fa-icon [icon]="icon.icons.Location" /> {{city.country}}</span>
-                    <span>{{city.description}}</span>
+                    <div class=" flex flex-row gap-4 items-end md:flex-col md:gap-2 md:items-start">
+                        <span class="text-3xl text-orange-500 font-bold">{{$index+1}}.</span>
+                        <span class="font-Oswald text-4xl">{{city.name}}</span>
+                        <span class="font-Handlee text-l"><fa-icon [icon]="icon.icons.Location" />
+                            {{city.country}}</span>
+                    </div>
+                    <div class="w-full line-clamp-6 md:line-clamp-4 overflow-hidden text-ellipsis">
+                        {{city.description}}
+                    </div>
                     <div>
                         @for(landmark of city.landmarks;track landmark){
                         @for(category of landmark.categories;track category){
-
                         <button>{{category.iconName}}</button>
                         }
                         }
