@@ -14,9 +14,6 @@ Advenus is a travel discovery web application built with **Angular** (using the 
 > We adhere to well-established software design principles, such as SOLID and DRY, ensuring maintainable and scalable code throughout the project.
 
 
-## Project Structure
-Below is an illustrative breakdown of the main folders and files in this repository:
-
 ## Features
 - **Responsive UI**: Built with Tailwind CSS, DaisyUI, and Flowbite for rapid, consistent styling.
 - **Modular Architecture**: Clearly separated Angular modules and components for maintainability.
