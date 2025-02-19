@@ -11,7 +11,14 @@ Advenus is a travel discovery web application built with **Angular** (using the 
 - **Testing**: Karma & Jasmine
 - **Map**: leaflet
 
-> We adhere to well-established software design principles, such as SOLID and DRY, ensuring maintainable and scalable code throughout the project.
+
+## Screenshots
+Here are  screenshots (click to see them in full size):
+
+[<img src="https://files.catbox.moe/bhgvw8.jpeg" alt="Screenshot 1" width="250" style="border-radius: 8px; margin: 4px" />](https://files.catbox.moe/bhgvw8.jpeg)
+[<img src="https://files.catbox.moe/vpkgyj.jpeg" alt="Screenshot 2" width="250" style="border-radius: 8px; margin: 4px" />](https://files.catbox.moe/vpkgyj.jpeg)
+[<img src="https://files.catbox.moe/u4lt3h.jpeg" alt="Screenshot 3" width="250" style="border-radius: 8px; margin: 4px" />](https://files.catbox.moe/u4lt3h.jpeg)
+
 
 
 ## Features
